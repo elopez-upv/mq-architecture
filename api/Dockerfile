@@ -7,7 +7,7 @@ WORKDIR /home/node/api
 
 ENV NODE_ENV development
 
-COPY package*.json ./
+COPY ./api/package*.json ./
 COPY . .
 
 RUN npm install

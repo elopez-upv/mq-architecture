@@ -73,3 +73,58 @@ services:
       KEYCLOAK_PASSWORD: guest
     depends_on:
       - mysql
+
+  front-end:
+    container_name: front-end
+    build:
+      context: .
+      dockerfile: ./front-end/Dockerfile
+    volumes:
+      - ./:/usr/src/app/front-end
+      - /usr/src/app/front-end/node_modules
+    ports:
+      - 6000:3000
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+  api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    volumes:
+      - ./src:/home/node/api/src
+      - ./node_modules:/home/node/api/node_modules
+    environment:
+      - NODE_ENV=development
+    working_dir: /home/node/api
+    container_name: api
+    ports:
+      - 3000:3000
+
+  observer:
+    build:
+      context: .
+      dockerfile: ./observer/Dockerfile
+    volumes:
+      - ./src:/home/node/observer/src
+      - ./node_modules:/home/node/observer/node_modules
+    environment:
+      - NODE_ENV=development
+    working_dir: /home/node/observer
+    container_name: observer
+    ports:
+      - 4000:3000
+
+  worker:
+    build:
+      context: .
+      dockerfile: ./worker/Dockerfile
+    volumes:
+      - ./src:/home/node/worker/src
+      - ./node_modules:/home/node/worker/node_modules
+    environment:
+      - NODE_ENV=development
+    working_dir: /home/node/worker
+    container_name: worker
+    ports:
+      - 5000:3000

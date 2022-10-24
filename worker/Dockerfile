@@ -7,7 +7,7 @@ WORKDIR /home/node/worker
 
 ENV NODE_ENV development
 
-COPY package*.json ./
+COPY ./worker/package*.json ./
 COPY . .
 
 RUN npm install

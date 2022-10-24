@@ -7,7 +7,7 @@ WORKDIR /home/node/observer
 
 ENV NODE_ENV development
 
-COPY package*.json ./
+COPY ./observer/package*.json ./
 COPY . .
 
 RUN npm install
