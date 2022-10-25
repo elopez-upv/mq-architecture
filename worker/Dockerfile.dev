@@ -5,10 +5,8 @@ RUN mkdir -p /home/node/worker/node_modules \
 
 WORKDIR /home/node/worker
 
-ENV NODE_ENV development
-
 COPY ./worker/package*.json ./
-COPY . .
+COPY ./worker .
 
 RUN npm install
 

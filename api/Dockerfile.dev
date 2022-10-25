@@ -5,10 +5,8 @@ RUN mkdir -p /home/node/api/node_modules \
 
 WORKDIR /home/node/api
 
-ENV NODE_ENV development
-
 COPY ./api/package*.json ./
-COPY . .
+COPY ./api .
 
 RUN npm install
 

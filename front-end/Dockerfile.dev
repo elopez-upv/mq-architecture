@@ -1,0 +1,14 @@
+# node 16.13.2 alpine
+FROM node@sha256:f21f35732964a96306a84a8c4b5a829f6d3a0c5163237ff4b6b8b34f8d70064b
+
+WORKDIR /usr/src/app/front-end
+
+COPY ./front-end/package*.json ./
+
+RUN npm install
+
+COPY ./front-end .
+
+EXPOSE 3000
+
+CMD [ "npm", "start" ]

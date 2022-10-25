@@ -5,10 +5,8 @@ RUN mkdir -p /home/node/observer/node_modules \
 
 WORKDIR /home/node/observer
 
-ENV NODE_ENV development
-
 COPY ./observer/package*.json ./
-COPY . .
+COPY ./observer .
 
 RUN npm install
 
