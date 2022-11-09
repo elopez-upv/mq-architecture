@@ -1,9 +1,15 @@
 export default function makeEventService({ logger }) {
-    async function newEventAction() {
+    async function newEventAction(request) {
         try {
-            logger.info('hereeeee')
+            logger.info(`[makeEventService][newEventAction][${request.id}] hereeeee`)
+            return {
+                result: 'SUCCESS',
+                detail: {
+                    description: 'OK'
+                }
+            }
         } catch (e) {
-            logger.error(`[makeEventService][newEventAction] ${e}`)
+            logger.error(`[makeEventService][newEventAction][${request.id}] ${e}`)
             throw e
         }
     }

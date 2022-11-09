@@ -1,6 +1,10 @@
+import { logger } from '../utils/index.js'
+
 export default function requestHandler(controller) {
     return async (req, res) => {
+        logger.info(`[requestHandler][${req.id}] Iniciando request`)
         const httpRequest = {
+            id: req.id || '',
             body: req.body,
             host: req.get('host'),
             origin: req.get('origin') || req.socket.remoteAddress,
@@ -27,23 +31,36 @@ export default function requestHandler(controller) {
                 || httpResponse.statusCode === 404
                 || httpResponse.statusCode === 400
             ) {
+                logger.error(`[requestHandler][${req.id}] Error interno`)
                 res.setHeader('Content-Type', 'application/problem+json')
             } else {
+                logger.info(`[requestHandler][${req.id}] Request Exitosa`)
                 res.setHeader('Content-Type', 'application/json')
             }
 
             res.status(httpResponse.statusCode)
-
-            res.send(httpResponse.body)
+            logger.info(`[requestHandler][${req.id}] code: ${httpResponse.statusCode}`)
+            logger.info(`[requestHandler][${req.id}] Request Finalizada`)
+            res.send({ id: req.id, ...httpResponse.body })
         } else {
+            logger.error(`[requestHandler][${req.id}] Error interno`)
             res.status(500)
             res.setHeader('Content-Type', 'application/problem+json')
-            res.send({
+            const response = {
+                id: req.id,
+                result: 'ERROR',
                 type: 'about:blank',
                 title: 'Internal Server Error',
                 status: 500,
-                detail: 'An internal server error ocurred'
-            })
+                detail: 'An internal server error ocurred',
+                description: {
+                    errorCode: '7005',
+                    detail: 'Error Interno, Intente nuevamente'
+                }
+            }
+            logger.error(`[requestHandler][${req.id}] code: 500 response`)
+            logger.error(`[requestHandler][${req.id}] Request Finalizada`)
+            res.send(response)
         }
     }
 }

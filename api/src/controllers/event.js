@@ -1,15 +1,19 @@
 export default function makeEventController({ logger, eventService }) {
-    async function newEventAction() {
+    async function newEventAction(request) {
         try {
-            logger.info('newEventAction')
-            await eventService.newEventAction()
-            return {
-                statusCode: 200,
-                body: 'OK'
+            const params = {
+                id: request.id,
+                ...request.body
             }
+            const result = await eventService.newEventAction(params)
+
+            return result ? {
+                statusCode: 200,
+                body: result
+            } : null
         } catch (e) {
-            logger.error(`[makeEventController][newEventAction] ${e}`)
-            throw e
+            logger.error(`[makeEventController][newEventAction][${request.id}] ${e}`)
+            return null
         }
     }
 

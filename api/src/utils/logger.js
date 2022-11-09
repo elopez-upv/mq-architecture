@@ -21,7 +21,7 @@ export default function makeLogger({ winston, dateManager }) {
                     // eslint-disable-next-line no-shadow
                     const { timestamp, level, message, ms, ...extra } = info
 
-                    return `[${level}][${timestamp}][${ms}]\t[${APP_NAME}]${message} ${
+                    return `[${level}][${timestamp}][${ms}][${APP_NAME}]${message} ${
                         Object.keys(extra).length ? JSON.stringify(extra, null, 2) : ''
                     }`
                 })
@@ -42,7 +42,7 @@ export default function makeLogger({ winston, dateManager }) {
                     // eslint-disable-next-line no-shadow
                     const { timestamp, level, message, ms, ...extra } = info
 
-                    return `[${level}][${timestamp}][${ms}]\t[${APP_NAME}]${message} ${
+                    return `[${level}][${timestamp}][${ms}][${APP_NAME}]${message} ${
                         Object.keys(extra).length ? JSON.stringify(extra, null, 2) : ''
                     }`
                 })
