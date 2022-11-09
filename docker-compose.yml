@@ -1,6 +1,18 @@
 version: '3'
 services:
-
+  mysql:
+    container_name: mysql
+    image: mysql:5.7.33
+    restart: always
+    ports:
+      - 3400:3306
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: guest
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: guest
+      MYSQL_PASSWORD: guest
   zookeeper:
     container_name: zookeeper
     image: confluentinc/cp-zookeeper:7.0.1
@@ -41,19 +53,17 @@ services:
       KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper: 2181
     depends_on:
       - kafka-broker
-  mysql:
-    container_name: mysql
-    image: mysql:5.7.33
-    restart: always
-    ports:
-      - 3400:3306
-    volumes:
-      - ./volumes/mysql:/var/lib/mysql
+  init-kafka:
+    container_name: init-kafka
+    image: confluentinc/cp-kafka:7.0.1
+    command: '/kafka/init.sh'
     environment:
-      MYSQL_ROOT_PASSWORD: guest
-      MYSQL_DATABASE: keycloak
-      MYSQL_USER: guest
-      MYSQL_PASSWORD: guest
+      KAFKA_BROKER: kafka-broker:29092
+      TOPIC_NAME: git-events
+    volumes:
+      - ./kafka:/kafka
+    depends_on:
+      - kafka-broker
   keycloak:
     container_name: keycloak
     image: jboss/keycloak:16.1.1
@@ -69,6 +79,7 @@ services:
       KEYCLOAK_PASSWORD: guest
     depends_on:
       - mysql
+      - kafka-broker
   api:
     container_name: api
     build:
@@ -83,48 +94,49 @@ services:
       - NODE_ENV=development
     depends_on:
       - kafka-broker
+      - init-kafka
       - keycloak
-  worker:
-    container_name: worker
-    build:
-      context: .
-      dockerfile: ./worker/Dockerfile.dev
-    ports:
-      - 3001:3000
-    volumes:
-      - ./worker/src:/home/node/worker/src
-      - ./worker/node_modules:/home/node/worker/node_modules
-    environment:
-      - NODE_ENV=development
-    depends_on:
-      - kafka-broker
-  observer:
-    container_name: observer
-    build:
-      context: .
-      dockerfile: ./observer/Dockerfile.dev
-    ports:
-      - 3002:3000
-    volumes:
-      - ./observer/src:/home/node/observer/src
-      - ./observer/node_modules:/home/node/observer/node_modules
-    environment:
-      - NODE_ENV=development
-    depends_on:
-      - api
-      - worker
-  front-end:
-    container_name: front-end
-    build:
-      context: .
-      dockerfile: ./front-end/Dockerfile.dev
-    ports:
-      - 5000:3000
-    volumes:
-      - ./front-end:/usr/src/app/front-end
-      - ./front-end/node_modules:/usr/src/app/front-end/node_modules
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    depends_on:
-      - api
+  #worker:
+  #  container_name: worker
+  #  build:
+  #    context: .
+  #    dockerfile: ./worker/Dockerfile.dev
+  #  ports:
+  #    - 3001:3000
+  #  volumes:
+  #    - ./worker/src:/home/node/worker/src
+  #    - ./worker/node_modules:/home/node/worker/node_modules
+  #  environment:
+  #    - NODE_ENV=development
+  #  depends_on:
+  #    - kafka-broker
+  #observer:
+  #  container_name: observer
+  #  build:
+  #    context: .
+  #    dockerfile: ./observer/Dockerfile.dev
+  #  ports:
+  #    - 3002:3000
+  #  volumes:
+  #    - ./observer/src:/home/node/observer/src
+  #    - ./observer/node_modules:/home/node/observer/node_modules
+  #  environment:
+  #    - NODE_ENV=development
+  #  depends_on:
+  #    - api
+  #    - worker
+  #front-end:
+  #  container_name: front-end
+  #  build:
+  #    context: .
+  #    dockerfile: ./front-end/Dockerfile.dev
+  #  ports:
+  #    - 5000:3000
+  #  volumes:
+  #    - ./front-end:/usr/src/app/front-end
+  #    - ./front-end/node_modules:/usr/src/app/front-end/node_modules
+  #  stdin_open: true
+  #  environment:
+  #    - CHOKIDAR_USEPOLLING=true
+  #  depends_on:
+  #    - api
