@@ -1,7 +1,11 @@
-export default function makeEventService({ logger }) {
-    async function newEventAction(request) {
+export default function makeEventService({ logger, queueServer }) {
+    async function newEventAction(params) {
         try {
-            logger.info(`[makeEventService][newEventAction][${request.id}] hereeeee`)
+            logger.info(`[makeEventService][newEventAction][${params.id}] hereeeee`)
+
+            const { url } = params
+            await queueServer.producer.sendToQueue({ url })
+            logger.info(`clonando repo ${url}`)
             return {
                 result: 'SUCCESS',
                 detail: {
@@ -9,7 +13,7 @@ export default function makeEventService({ logger }) {
                 }
             }
         } catch (e) {
-            logger.error(`[makeEventService][newEventAction][${request.id}] ${e}`)
+            logger.error(`[makeEventService][newEventAction][${params.id}] ${e}`)
             throw e
         }
     }
