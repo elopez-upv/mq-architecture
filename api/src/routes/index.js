@@ -6,6 +6,6 @@ import { event } from '../controllers/index.js'
 
 const router = express.Router()
 
-router.post('/event', [express.json()], requestHandler(event.newEventAction))
+router.post('/git/event', [express.json()], requestHandler(event.newEventAction))
 
 export default router
