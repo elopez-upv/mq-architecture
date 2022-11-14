@@ -1,4 +1,4 @@
-import { Kafka } from 'kafkajs'
+import { Kafka, Partitioners } from 'kafkajs'
 import { logger } from '../../utils/index.js'
 import env from '../../config/env.js'
 
@@ -12,7 +12,9 @@ const kafka = new Kafka({
     ssl: false
 })
 
-const kafkaClient = kafka.producer()
+const kafkaClient = kafka.producer({
+    createPartitioner: Partitioners.DefaultPartitioner
+})
 
 async function connect() {
     try {

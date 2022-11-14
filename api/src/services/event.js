@@ -1,9 +1,8 @@
 export default function makeEventService({ logger, queueServer }) {
     async function newEventAction(params) {
         try {
-            logger.info(`[makeEventService][newEventAction][${params.id}] hereeeee`)
-
             const { url } = params
+            logger.info(`[makeEventService][newEventAction][${params.id}] Enviando nuevo evento para ${params.url}`)
             await queueServer.producer.sendToQueue({ url })
             logger.info(`clonando repo ${url}`)
             return {
