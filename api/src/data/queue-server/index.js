@@ -21,7 +21,7 @@ async function connect() {
         await kafkaClient.connect()
         return kafkaClient
     } catch (e) {
-        logger.error('[queue-server][producer][connect] Error Not Connected')
+        logger.error(`[queue-server][producer][connect] Error ${e}`)
         throw e
     }
 }

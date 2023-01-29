@@ -23,6 +23,9 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "kafkajs": "^2.2.2",
+    "moment-timezone": "^0.5.39",
+    "winston": "^3.8.2"
   }
 }

@@ -96,20 +96,20 @@ services:
       - kafka-broker
       - init-kafka
       - keycloak
-  #worker:
-  #  container_name: worker
-  #  build:
-  #    context: .
-  #    dockerfile: ./worker/Dockerfile.dev
-  #  ports:
-  #    - 3001:3000
-  #  volumes:
-  #    - ./worker/src:/home/node/worker/src
-  #    - ./worker/node_modules:/home/node/worker/node_modules
-  #  environment:
-  #    - NODE_ENV=development
-  #  depends_on:
-  #    - kafka-broker
+  worker:
+    container_name: worker
+    build:
+      context: .
+      dockerfile: ./worker/Dockerfile.dev
+    ports:
+      - 3001:3000
+    volumes:
+      - ./worker/src:/home/node/worker/src
+      - ./worker/node_modules:/home/node/worker/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - kafka-broker
   #observer:
   #  container_name: observer
   #  build:
