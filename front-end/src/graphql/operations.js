@@ -9,8 +9,21 @@ const newJobMutation = gql`
   }
 `
 
+const getJobsQuery = gql`
+  query MyQuery($input: client) {
+    getJobs(input: $input) {
+      id
+      url
+      user
+      createdAt
+      params
+    }
+  }
+`
+
 const operations = {
-  newJobMutation
+  newJobMutation,
+  getJobsQuery
 }
 
 export default operations

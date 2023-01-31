@@ -11,6 +11,7 @@ import Welcome from './components/welcome'
 import RenderOnAuthenticated from './components/login/RenderOnAuthenticated'
 import RenderOnAnonymous from './components/login/RenderOnAnonymous'
 import GitExecutor from './components/git-executor/Executor'
+import GitReader from './components/git-executor/Reader'
 
 const Root = () => {
   const abortController = new AbortController()
@@ -23,24 +24,23 @@ const Root = () => {
   return (
     <ReactKeycloakProvider authClient={keycloak}>
       <ApolloProvider client={apollo}>
-        <React.StrictMode>
-          <div style={{ background: 'radial-gradient(circle at 52.1% -29.6%, rgb(144, 17, 105) 0%, rgb(51, 0, 131) 100.2%)' }}>
-            <BrowserRouter basename="/">
-              <RenderOnAnonymous>
+        <div style={{ background: 'radial-gradient(circle at 52.1% -29.6%, rgb(144, 17, 105) 0%, rgb(51, 0, 131) 100.2%)' }}>
+          <BrowserRouter basename="/">
+            <RenderOnAnonymous>
+              <Routes>
+                <Route path="/" element={<Welcome />} />
+              </Routes>
+            </RenderOnAnonymous>
+            <RenderOnAuthenticated>
+              <App>
                 <Routes>
-                  <Route path="/" element={<Welcome />} />
+                  <Route path="/" element={<GitExecutor />} />
+                  <Route path="/reader" element={<GitReader />} />
                 </Routes>
-              </RenderOnAnonymous>
-              <RenderOnAuthenticated>
-                <App>
-                  <Routes>
-                    <Route path="/" element={<GitExecutor />} />
-                  </Routes>
-                </App>
-              </RenderOnAuthenticated>
-            </BrowserRouter>
-          </div>
-        </React.StrictMode>
+              </App>
+            </RenderOnAuthenticated>
+          </BrowserRouter>
+        </div>
       </ApolloProvider>
     </ReactKeycloakProvider>
   )

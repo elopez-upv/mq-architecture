@@ -29,9 +29,10 @@ function CollapsibleExample() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Git Executor</Nav.Link>
+            <Nav.Link href="/reader">Jobs Result</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="/">{userName}</Nav.Link>
+            <Nav.Link>{userName}</Nav.Link>
           </Nav>
           <Nav>
             <Button className="btn-grad" style={{ fontSize: '15px', boxShadow: 'none', padding: '10px 16px', border: 'none' }} onClick={logout}>Logout</Button>

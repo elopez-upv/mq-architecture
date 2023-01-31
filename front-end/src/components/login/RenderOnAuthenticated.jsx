@@ -7,7 +7,7 @@ const RenderOnAuthenticated = ({ children }) => {
   const decoded = keycloak.token && jwt_decode(keycloak.token)
   const userName = decoded && decoded.preferred_username
   localStorage.setItem('userName', userName)
-
+  localStorage.setItem('myJobs', JSON.stringify({ jobs: [] }))
   return keycloak.authenticated ? children : false
 }
 
