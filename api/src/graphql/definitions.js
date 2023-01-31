@@ -1,6 +1,6 @@
 const definitions = `#graphql
     type Query {
-        hello: String
+        getJobs(input: client): [jobResult]
     }
 
     type Mutation {
@@ -17,6 +17,18 @@ const definitions = `#graphql
         url: String!,
         user: String!,
         createdAt: String!,
+        params: String
+    }
+
+    input client {
+        userName: String!
+    }
+
+    type jobResult {
+        id: String!
+        url: String!
+        user: String!
+        createdAt: String!
         params: String
     }
 `
