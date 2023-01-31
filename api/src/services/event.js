@@ -28,7 +28,7 @@ export default function makeEventService({ logger, queueServer }) {
 
     async function informEvents(input) {
         try {
-            logger.info('[makeEventService][informEvents] Informando Eventos')
+            logger.info(`[makeEventService][informEvents] Informando Eventos para usuario: ${input.userName}`)
             const data = []
 
             jobs.forEach((value, key) => {
