@@ -11,7 +11,8 @@ const env = {
     KAFKA_BROKER: process.env.KAFKA_BROKER || 'localhost:9092',
     KAFKA_TOPIC: process.env.KAFKA_TOPIC || 'git-events',
     KAFKA_TOPIC_RESULTS: process.env.KAFKA_TOPIC || 'git-events-results',
-    KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID || 'client-consumer'
+    KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID || 'client-consumer',
+    FILE_DIR: process.env.FILE_DIR || './files'
 }
 
 export default env

@@ -14,9 +14,12 @@ const getJobsQuery = gql`
     getJobs(input: $input) {
       id
       url
+      fileName
       user
       createdAt
       params
+      result
+      elapsedTime
     }
   }
 `

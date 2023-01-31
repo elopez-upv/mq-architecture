@@ -12,6 +12,7 @@ import jobMutation from '../../hooks/git-executor/newJob'
 function gitEvents() {
   const [urlInput, setUrl] = useState('')
   const [paramsInput, setParams] = useState('')
+  const [fileNameInput, setFileName] = useState('')
 
   const handleChangeUrl = (e) => {
     setUrl(e.target.value)
@@ -21,13 +22,18 @@ function gitEvents() {
     setParams(e.target.value)
   }
 
+  const handleChangeFileName = (e) => {
+    setFileName(e.target.value)
+  }
+
   const newJobMutation = jobMutation()
   const { createNewJob } = newJobMutation
 
   const newJobAction = () => {
-    createNewJob({ urlInput, paramsInput })
+    createNewJob({ urlInput, paramsInput, fileNameInput })
     setUrl('')
     setParams('')
+    setFileName('')
   }
 
   return (
@@ -44,6 +50,10 @@ function gitEvents() {
                     <Form.Group className="mb-3" controlId="formGitUrl">
                       <Form.Label>Git Url</Form.Label>
                       <Form.Control required type="text" placeholder="URL" onChange={handleChangeUrl} value={urlInput} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formFileName">
+                      <Form.Label>Nombre Ejecutable</Form.Label>
+                      <Form.Control type="text" placeholder="file.sh" onChange={handleChangeFileName} value={fileNameInput} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formParams">
                       <Form.Label>Parámetros</Form.Label>

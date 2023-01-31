@@ -1,15 +1,11 @@
 export default function makeRepositoryManager({ logger, git }) {
-    async function cloneRepo(repositoryUrl) {
+    async function cloneRepo({ url, path, id }) {
         try {
-            const url = 'https://github.com/elopez-upv/test.git'
-
-            await git.clone(url, './files')
-            console.log('todo nicee')
-            // logger.info(`[makeSubscriber][handleMessage][${id}] -> Starting action`)
-
+            logger.info(`[makeRepositoryManager][cloneRepo][${id}] -> Starting action`)
+            await git.clone(url, path)
             return true
         } catch (e) {
-            logger.error(`[makeRepositoryManager][cloneRepo] -> Error ${e}`)
+            logger.error(`[makeRepositoryManager][cloneRepo][${id}] -> Error ${e}`)
             throw e
         }
     }
