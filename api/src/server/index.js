@@ -1,11 +1,10 @@
-import express from 'express'
-import requestID from 'express-request-id'
+import { ApolloServer } from '@apollo/server'
+import definitions from '../graphql/definitions.js'
+import resolvers from '../graphql/resolvers.js'
 
-import router from '../routes/index.js'
+const server = new ApolloServer({
+    typeDefs: definitions,
+    resolvers
+})
 
-const app = express()
-
-app.use(requestID())
-app.use(router)
-
-export default app
+export default server

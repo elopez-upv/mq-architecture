@@ -1,19 +1,22 @@
 export default function makeEventController({ logger, eventService }) {
-    async function newEventAction(request) {
+    async function newEventAction(input) {
         try {
             const params = {
-                id: request.id,
-                ...request.body
+                ...input
             }
-            const result = await eventService.newEventAction(params)
 
-            return result ? {
-                statusCode: 200,
-                body: result
-            } : null
+            await eventService.newEventAction(params)
+
+            return {
+                result: 'success',
+                msg: 'job created'
+            }
         } catch (e) {
-            logger.error(`[makeEventController][newEventAction][${request.id}] ${e}`)
-            return null
+            logger.error(`[makeEventController][newEventAction] ${e}`)
+            return {
+                result: 'error',
+                msg: 'internal server error'
+            }
         }
     }
 
