@@ -10,7 +10,7 @@ export default function makeConsumer({ logger, action }) {
             return true
         } catch (e) {
             logger.error(`[makeSubscriber][handleMessage] -> Error ${e}`)
-            throw e
+            return false
         }
     }
     return Object.freeze({
