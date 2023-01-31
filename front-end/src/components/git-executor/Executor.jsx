@@ -1,24 +1,35 @@
-import React from 'react'
+/* eslint-disable no-console */
+import React, { useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import '../../assets/style/index.css'
+import jobMutation from '../../hooks/git-executor/newJob'
 
-const MySwal = withReactContent(Swal)
-
-Swal.fire({
-  position: 'top-end',
-  icon: 'success',
-  title: 'Your work has been saved',
-  showConfirmButton: false,
-  timer: 1500
-})
 function gitEvents() {
+  const [urlInput, setUrl] = useState('')
+  const [paramsInput, setParams] = useState('')
+
+  const handleChangeUrl = (e) => {
+    setUrl(e.target.value)
+  }
+
+  const handleChangeParams = (e) => {
+    setParams(e.target.value)
+  }
+
+  const newJobMutation = jobMutation()
+  const { createNewJob } = newJobMutation
+
+  const newJobAction = () => {
+    createNewJob({ urlInput, paramsInput })
+    setUrl('')
+    setParams('')
+  }
+
   return (
     <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '90vh', fontFamily: 'Open Sans, sans-serif' }}>
       <Row>
@@ -32,16 +43,16 @@ function gitEvents() {
                   <Form>
                     <Form.Group className="mb-3" controlId="formGitUrl">
                       <Form.Label>Git Url</Form.Label>
-                      <Form.Control required type="text" placeholder="URL" />
+                      <Form.Control required type="text" placeholder="URL" onChange={handleChangeUrl} value={urlInput} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formParams">
                       <Form.Label>Parámetros</Form.Label>
-                      <Form.Control type="text" placeholder="Parámetros" />
+                      <Form.Control type="text" placeholder="Parámetros" onChange={handleChangeParams} value={paramsInput} />
                     </Form.Group>
                     <br />
                     <Row className="justify-content-md-center">
                       <Col md="auto">
-                        <Button className="btn-grad" type="submit">
+                        <Button className="btn-grad" type="submit" onClick={(e) => { e.preventDefault(); newJobAction() }}>
                           Aceptar
                         </Button>
                       </Col>
