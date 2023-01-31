@@ -15,6 +15,7 @@ const definitions = `#graphql
     input job {
         id: String!,
         url: String!,
+        fileName: String!,
         user: String!,
         createdAt: String!,
         params: String
@@ -27,9 +28,12 @@ const definitions = `#graphql
     type jobResult {
         id: String!
         url: String!
+        fileName: String!
         user: String!
         createdAt: String!
         params: String
+        result: String!
+        elapsedTime: String!
     }
 `
 
