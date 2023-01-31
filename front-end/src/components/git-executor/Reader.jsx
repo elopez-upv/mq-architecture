@@ -29,6 +29,8 @@ function gitJobs() {
                   <tr>
                     <th>Id</th>
                     <th>Url</th>
+                    <th>Archivo</th>
+                    <th>Fecha Creación</th>
                     <th>Tiempo Demorado</th>
                     <th>Resultado</th>
                   </tr>
@@ -38,7 +40,9 @@ function gitJobs() {
                     <tr>
                       <td>{job.id}</td>
                       <td>{job.url}</td>
-                      <td>0</td>
+                      <td>{job.fileName}</td>
+                      <td>{job.createdAt}</td>
+                      <td>{job.elapsedTime}</td>
                       <td>{job.result}</td>
                     </tr>
                   ))}

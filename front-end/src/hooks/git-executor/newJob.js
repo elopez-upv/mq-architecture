@@ -12,7 +12,7 @@ const { newJobMutation } = operations
 const jobMutation = () => {
   const [newJob] = useMutation(newJobMutation)
 
-  const createNewJob = async ({ urlInput, paramsInput }) => {
+  const createNewJob = async ({ urlInput, paramsInput, fileNameInput }) => {
     const userName = localStorage.getItem('userName')
 
     await newJob({
@@ -20,6 +20,7 @@ const jobMutation = () => {
         input: {
           id: uuidv4(),
           url: urlInput,
+          fileName: fileNameInput,
           user: userName,
           createdAt: moment().tz('Europe/Madrid').format(),
           params: paramsInput
