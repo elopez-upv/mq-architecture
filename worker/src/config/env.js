@@ -8,9 +8,10 @@ const env = {
     LOG_FILENAME: process.env.LOG_FILENAME || 'worker',
     ENABLE_LOG_FILE: process.env.ENABLE_LOG_FILE || 'false',
     KAFKA_CLIENT_ID: process.env.KAFKA_CLIENT_ID || 'git-events',
-    KAFKA_BROKER: process.env.KAFKA_BROKER || 'kafka-broker:29092',
+    KAFKA_BROKER: process.env.KAFKA_BROKER || 'localhost:9092',
     KAFKA_TOPIC: process.env.KAFKA_TOPIC || 'git-events',
-    KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID || 'git-events'
+    KAFKA_TOPIC_RESULTS: process.env.KAFKA_TOPIC || 'git-events-results',
+    KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID || 'client-consumer'
 }
 
 export default env

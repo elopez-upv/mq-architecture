@@ -1,24 +1,19 @@
-export default function makeConsumer({ logger, connect }) {
-    async function start() {
+export default function makeConsumer({ logger, action }) {
+    async function handleMessage(msg) {
         try {
-            const consumer = await connect()
+            const event = JSON.parse(msg.value.toString())
+            const { id } = event
+            logger.info(`[makeSubscriber][handleMessage][${id}] -> Starting action`)
 
-            await consumer.run({
-                eachMessage: async ({ partition, message }) => {
-                    console.log({
-                        partition,
-                        offset: message.offset,
-                        value: message.value.toString()
-                    })
-                }
-            })
+            await action(event)
+
             return true
         } catch (e) {
-            logger.error(`[makeConsumer][start] ${e}`)
+            logger.error(`[makeSubscriber][handleMessage] -> Error ${e}`)
             throw e
         }
     }
     return Object.freeze({
-        start
+        handleMessage
     })
 }

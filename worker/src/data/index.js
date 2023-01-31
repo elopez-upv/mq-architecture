@@ -1,6 +1,7 @@
 import queueServer from './queue-server/index.js'
+import gitClient from './git-client/index.js'
 
 export {
-    // eslint-disable-next-line import/prefer-default-export
-    queueServer
+    queueServer,
+    gitClient
 }
