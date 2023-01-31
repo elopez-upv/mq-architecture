@@ -1,16 +1,13 @@
-import env from './config/env.js'
-import app from './server/index.js'
+import { startStandaloneServer } from '@apollo/server/standalone'
+import { queueServer } from './data/index.js'
+import { event } from './controllers/index.js'
+import server from './server/index.js'
 import { logger } from './utils/index.js'
 
-const { PORT } = env
-
 try {
-    app.listen(PORT, (e) => {
-        if (e) {
-            logger.error(`[server] ${e}`)
-            throw new Error(e)
-        }
-        logger.info('[server] Server started')
+    queueServer.start(event.newEventResultAction).then(async () => {
+        const { url } = await startStandaloneServer(server)
+        logger.info(`🚀 Server ready at ${url}`)
     })
 } catch (e) {
     logger.error(`[server] ${e}`)

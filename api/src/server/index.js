@@ -1,5 +1,10 @@
-import express from 'express'
+import { ApolloServer } from '@apollo/server'
+import definitions from '../graphql/definitions.js'
+import resolvers from '../graphql/resolvers.js'
 
-const app = express()
+const server = new ApolloServer({
+    typeDefs: definitions,
+    resolvers
+})
 
-export default app
+export default server
