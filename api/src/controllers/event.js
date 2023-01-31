@@ -20,7 +20,29 @@ export default function makeEventController({ logger, eventService }) {
         }
     }
 
+    async function newEventResultAction(input) {
+        try {
+            const params = {
+                ...input
+            }
+
+            await eventService.newEventResult(params)
+
+            return {
+                result: 'success',
+                msg: 'job executed'
+            }
+        } catch (e) {
+            logger.error(`[makeEventController][newEventResultAction] ${e}`)
+            return {
+                result: 'error',
+                msg: 'internal server error'
+            }
+        }
+    }
+
     return Object.freeze({
-        newEventAction
+        newEventAction,
+        newEventResultAction
     })
 }
