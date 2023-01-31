@@ -13,6 +13,7 @@ export default function makeConsumer({ logger, action }) {
             return false
         }
     }
+
     return Object.freeze({
         handleMessage
     })

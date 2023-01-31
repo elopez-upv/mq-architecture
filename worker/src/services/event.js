@@ -3,7 +3,9 @@ import env from '../config/env.js'
 
 const { FILE_DIR } = env
 
-export default function makeEventService({ logger, queueServer, gitClient, codeExecutor }) {
+export default function makeEventService({
+    logger, queueServer, gitClient, codeExecutor, dateManager
+}) {
     async function newEventAction(input) {
         const { id } = input
         try {
@@ -17,14 +19,24 @@ export default function makeEventService({ logger, queueServer, gitClient, codeE
     }
 
     async function newIncomingEvent(input) {
-        const { id, url, params } = input
-        const fileName = 'test.sh'
+        const { id, url, params, fileName, createdAt, user } = input
         const path = `${FILE_DIR}/${id}`
+
         try {
             logger.info(`[makeEventService][newIncomingEvent][${id}] Nuevo Resultado de Evento`)
             await gitClient.repositoryManager.cloneRepo({ url, path, id })
             const result = await codeExecutor.executor.file({ id, path: `${path}/${fileName}`, params })
-            await newEventAction({ id })
+            const elapsedTime = dateManager.elapsedTime(createdAt)
+            await newEventAction({
+                id,
+                url,
+                fileName,
+                user,
+                createdAt,
+                params,
+                result: result.replace(/\r?\n|\r/g, ' '),
+                elapsedTime
+            })
             await rm(path, { recursive: true })
             return true
         } catch (e) {
