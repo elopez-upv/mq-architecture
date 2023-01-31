@@ -68,49 +68,50 @@ services:
       - ./keycloak:/opt/keycloak/data/import
     depends_on:
       - kafka-broker
-  #api:
-  #  container_name: api
-  #  build:
-  #    context: .
-  #    dockerfile: ./api/Dockerfile.dev
-  #  ports:
-  #    - 3000:3000
-  #  volumes:
-  #    - ./api/src:/home/node/api/src
-  #    - ./api/node_modules:/home/node/api/node_modules
-  #  environment:
-  #    - NODE_ENV=development
-  #  depends_on:
-  #    - kafka-broker
-  #    - init-kafka
-  #    - keycloak
-  #worker:
-  #  container_name: worker
-  #  build:
-  #    context: .
-  #    dockerfile: ./worker/Dockerfile.dev
-  #  ports:
-  #    - 3001:3000
-  #  volumes:
-  #    - ./worker/src:/home/node/worker/src
-  #    - ./worker/node_modules:/home/node/worker/node_modules
-  #  environment:
-  #    - NODE_ENV=development
-  #  depends_on:
-  #    - kafka-broker
-  #front-end:
-  #  container_name: front-end
-  #  build:
-  #    context: .
-  #    dockerfile: ./front-end/Dockerfile.dev
-  #  ports:
-  #    - 5000:3000
-  #  volumes:
-  #    - ./front-end:/usr/src/app/front-end
-  #    - ./front-end/node_modules:/usr/src/app/front-end/node_modules
-  #  stdin_open: true
-  #  environment:
-  #    - WATCHPACK_POLLING=true
-  #    - CHOKIDAR_USEPOLLING=true
-  #  #depends_on:
-  #  #  - api
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api/src:/home/node/api/src
+      - ./api/node_modules:/home/node/api/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - kafka-broker
+      - init-kafka
+      - keycloak
+  worker:
+    container_name: worker
+    build:
+      context: .
+      dockerfile: ./worker/Dockerfile.dev
+    ports:
+      - 3001:3000
+    volumes:
+      - ./worker/src:/home/node/worker/src
+      - ./worker/node_modules:/home/node/worker/node_modules
+      - ./volumes/worker/files:/home/node/worker/files
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - kafka-broker
+  front-end:
+    container_name: front-end
+    build:
+      context: .
+      dockerfile: ./front-end/Dockerfile.dev
+    ports:
+      - 5000:3000
+    volumes:
+      - ./front-end:/usr/src/app/front-end
+      - ./front-end/node_modules:/usr/src/app/front-end/node_modules
+    stdin_open: true
+    environment:
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - api
