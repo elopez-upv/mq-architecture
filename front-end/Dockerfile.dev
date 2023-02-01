@@ -1,13 +1,21 @@
-# node 16.13.2 alpine
-FROM node@sha256:f21f35732964a96306a84a8c4b5a829f6d3a0c5163237ff4b6b8b34f8d70064b
+# node:18.13.0-alpine
+FROM node@sha256:09faa7dabeae557cb6baff17be5b216fc4e3c9608aa04fe71695aad3d229a9c7
 
 WORKDIR /usr/src/app/front-end
+
+RUN apk add --update \
+    python3 \
+    python3-dev \
+    py-pip \
+    build-base \
+  && pip install virtualenv \
+  && rm -rf /var/cache/apk/* \
+  && apk upgrade \
+  && apk add --no-cache bash git openssh
 
 COPY ./front-end/package*.json ./
 
 RUN npm install
-
-COPY ./front-end .
 
 EXPOSE 3000
 
