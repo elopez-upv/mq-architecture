@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import operations from '../../graphql/operations'
 import { GlobalContext } from '../../provider/global'
@@ -29,10 +29,7 @@ const jobsQuery = () => {
     return () => { }
   }, [data])
 
-  return (
-    // eslint-disable-next-line react/react-in-jsx-scope
-    <div />
-  )
+  return true
 }
 
 export default jobsQuery
