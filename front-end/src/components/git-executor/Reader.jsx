@@ -29,7 +29,7 @@ function gitJobs() {
                     <th key={2}>Url</th>
                     <th key={3}>Archivo</th>
                     <th key={4}>Fecha Creación</th>
-                    <th key={5}>Tiempo Demorado</th>
+                    <th key={5}>Tiempo Demorado (seg)</th>
                     <th key={6}>Resultado</th>
                   </tr>
                 </thead>
