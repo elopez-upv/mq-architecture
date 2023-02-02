@@ -22,7 +22,7 @@ function gitJobs() {
             <Card.Body>
               <Card.Title style={{ textAlign: 'center', fontSize: '30px', fontWeight: '600' }}>Jobs Creados</Card.Title>
               <br />
-              <Table striped bordered hover>
+              <Table responsive>
                 <thead>
                   <tr>
                     <th key={1}>Id</th>

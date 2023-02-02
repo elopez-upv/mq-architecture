@@ -35,13 +35,13 @@ function Header() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link eventKey="/">Git Executor</Nav.Link>
-            <Nav.Link eventKey="reader">Jobs Result</Nav.Link>
+            <Nav.Link eventKey="reader">Jobs Results</Nav.Link>
           </Nav>
           <Nav>
             <Navbar.Text>{`Sessión Expira: ${sessionLimit} | Usuario: ${userName}`}</Navbar.Text>
           </Nav>
           <Nav>
-            <Button className="btn-grad" style={{ fontSize: '15px', boxShadow: 'none', padding: '10px 16px', border: 'none' }} onClick={logout}>Logout</Button>
+            <Button className="btn-grad" style={{ fontSize: '12px', boxShadow: 'none', padding: '8px 12px', border: 'none' }} onClick={logout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>
