@@ -29,7 +29,7 @@ export default function makeEventService({
 
             const result = await codeExecutor.executor.file({ id, path: `${path}/${fileName}`, params })
 
-            await rm(path, { recursive: true })
+            await rm(path, { recursive: true, force: true })
 
             const elapsedTime = dateManager.getElapsedTime(createdAt)
 
@@ -47,7 +47,21 @@ export default function makeEventService({
             return true
         } catch (e) {
             logger.error(`[makeEventService][newIncomingEvent][${id}] ${e}`)
-            await rm(path, { recursive: true })
+
+            await rm(path, { recursive: true, force: true })
+            const elapsedTime = dateManager.getElapsedTime(createdAt)
+
+            await newEventAction({
+                id,
+                url,
+                fileName,
+                user,
+                createdAt,
+                params,
+                result: (e.message).toString().replace(/\r?\n|\r/g, '; '),
+                elapsedTime
+            })
+
             throw e
         }
     }
