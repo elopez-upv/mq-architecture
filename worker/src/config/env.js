@@ -10,7 +10,7 @@ const env = {
     KAFKA_CLIENT_ID: process.env.KAFKA_CLIENT_ID || 'git-events',
     KAFKA_BROKER: process.env.KAFKA_BROKER || 'localhost:9092',
     KAFKA_TOPIC: process.env.KAFKA_TOPIC || 'git-events',
-    KAFKA_TOPIC_RESULTS: process.env.KAFKA_TOPIC || 'git-events-results',
+    KAFKA_TOPIC_RESULTS: process.env.KAFKA_TOPIC_RESULTS || 'git-events-results',
     KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID || 'worker-consumer',
     FILE_DIR: process.env.FILE_DIR || './files'
 }

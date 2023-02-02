@@ -14,7 +14,7 @@ services:
     container_name: kafka-broker
     image: confluentinc/cp-kafka:7.0.1
     ports:
-      - 5000:9092
+      - 9092:9092
     volumes:
       - ./volumes/kafka/data:/var/lib/kafka/data
       - ./volumes/kafka/secrets:/etc/kafka/secrets
@@ -86,7 +86,7 @@ services:
       KAFKA_BROKER: kafka-broker:29092
       KAFKA_TOPIC: git-events
       KAFKA_TOPIC_RESULTS: git-events-results
-      KAFKA_GROUP_ID: client-consumer
+      KAFKA_GROUP_ID: api-consumer
     depends_on:
       - kafka-broker
   worker:
@@ -107,7 +107,7 @@ services:
       KAFKA_BROKER: kafka-broker:29092
       KAFKA_TOPIC: git-events
       KAFKA_TOPIC_RESULTS: git-events-results
-      KAFKA_GROUP_ID: client-consumer
+      KAFKA_GROUP_ID: worker-consumer
       FILE_DIR: './files'
     depends_on:
       - kafka-broker

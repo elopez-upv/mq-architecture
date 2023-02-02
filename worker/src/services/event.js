@@ -23,10 +23,16 @@ export default function makeEventService({
         const path = `${FILE_DIR}/${id}`
 
         try {
-            logger.info(`[makeEventService][newIncomingEvent][${id}] Nuevo Resultado de Evento`)
+            logger.info(`[makeEventService][newIncomingEvent][${id}] Nuevo Job Recibido`)
+
             await gitClient.repositoryManager.cloneRepo({ url, path, id })
+
             const result = await codeExecutor.executor.file({ id, path: `${path}/${fileName}`, params })
-            const elapsedTime = dateManager.elapsedTime(createdAt)
+
+            await rm(path, { recursive: true })
+
+            const elapsedTime = dateManager.getElapsedTime(createdAt)
+
             await newEventAction({
                 id,
                 url,
@@ -34,10 +40,10 @@ export default function makeEventService({
                 user,
                 createdAt,
                 params,
-                result: result.replace(/\r?\n|\r/g, ' '),
+                result: result.replace(/\r?\n|\r/g, '; '),
                 elapsedTime
             })
-            await rm(path, { recursive: true })
+
             return true
         } catch (e) {
             logger.error(`[makeEventService][newIncomingEvent][${id}] ${e}`)

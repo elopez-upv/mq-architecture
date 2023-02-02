@@ -5,7 +5,7 @@ export default function makeDateManager({ moment }) {
 
     function getElapsedTime(createdAt) {
         const now = getSysdate()
-        const elapsedTime = moment(now).diff(moment(createdAt))
+        const elapsedTime = moment(now).diff(moment(createdAt), 'seconds')
         return elapsedTime
     }
 
