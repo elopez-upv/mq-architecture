@@ -11,6 +11,11 @@ import '../../assets/style/index.css'
 const Welcome = () => {
   const { keycloak } = useKeycloak()
 
+  const login = () => {
+    localStorage.clear()
+    keycloak.login()
+  }
+
   return (
     <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', fontFamily: 'Open Sans, sans-serif' }}>
       <Row>
@@ -22,7 +27,7 @@ const Welcome = () => {
               <br />
               <Row className="justify-content-md-center">
                 <Col md="auto">
-                  <Button className="btn-grad" onClick={() => keycloak.login()}>Iniciar Sesión</Button>
+                  <Button className="btn-grad" onClick={login}>Iniciar Sesión</Button>
                 </Col>
               </Row>
             </Card.Body>
