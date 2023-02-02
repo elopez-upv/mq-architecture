@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -8,7 +8,11 @@ import '../../assets/style/index.css'
 import { GlobalContext } from '../../provider/global'
 
 function gitJobs() {
-  const { global } = useContext(GlobalContext)
+  const { global, setGlobal } = useContext(GlobalContext)
+
+  useEffect(() => {
+    setGlobal(JSON.parse(localStorage.getItem('myJobs')) || {})
+  }, [])
 
   return (
     <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '90vh', fontFamily: 'Open Sans, sans-serif' }}>

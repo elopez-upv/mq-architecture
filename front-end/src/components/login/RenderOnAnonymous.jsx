@@ -8,11 +8,11 @@ const RenderOnAnonymous = ({ children }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (!keycloak.authenticated && window.location.pathname !== '/') {
+      if (!keycloak.authenticated) {
         navigate('/')
       }
     }, 1000)
-  }, [])
+  }, [keycloak.authenticated])
 
   return !keycloak.authenticated ? children : null
 }

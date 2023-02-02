@@ -13,6 +13,7 @@ const Welcome = () => {
 
   const login = () => {
     localStorage.clear()
+    localStorage.setItem('myJobs', JSON.stringify({ jobs: [] }))
     keycloak.login()
   }
 

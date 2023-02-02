@@ -10,6 +10,8 @@ import logo from '../../assets/images/logo-white.png'
 function Header() {
   const { keycloak } = useKeycloak()
   const navigate = useNavigate()
+  const userName = localStorage.getItem('userName')
+  const sessionLimit = localStorage.getItem('sessionLimit')
 
   const logout = () => {
     keycloak.logout()
@@ -21,7 +23,7 @@ function Header() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect}>
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="#">
           <img
             src={logo}
             width="170"
@@ -36,7 +38,7 @@ function Header() {
             <Nav.Link eventKey="reader">Jobs Result</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link>{localStorage.getItem('userName')}</Nav.Link>
+            <Navbar.Text>{`Sessión Expira: ${sessionLimit} | Usuario: ${userName}`}</Navbar.Text>
           </Nav>
           <Nav>
             <Button className="btn-grad" style={{ fontSize: '15px', boxShadow: 'none', padding: '10px 16px', border: 'none' }} onClick={logout}>Logout</Button>

@@ -7,6 +7,7 @@ const { getJobsQuery } = operations
 
 const jobsQuery = () => {
   const { setGlobal } = useContext(GlobalContext)
+
   const { loading, error, data } = useQuery(getJobsQuery, {
     variables: {
       input: {
