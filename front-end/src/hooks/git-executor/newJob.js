@@ -14,27 +14,38 @@ const jobMutation = () => {
 
   const createNewJob = async ({ urlInput, paramsInput, fileNameInput }) => {
     const userName = localStorage.getItem('userName')
+    const uuid = uuidv4()
 
-    await newJob({
-      variables: {
-        input: {
-          id: uuidv4(),
-          url: urlInput,
-          fileName: fileNameInput,
-          user: userName,
-          createdAt: moment().tz('Europe/Madrid').format(),
-          params: paramsInput
+    try {
+      await newJob({
+        variables: {
+          input: {
+            id: uuid,
+            url: urlInput,
+            fileName: fileNameInput,
+            user: userName,
+            createdAt: moment().tz('Europe/Madrid').format(),
+            params: paramsInput
+          }
         }
-      }
-    })
+      })
 
-    MySwal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'Operación Exitosa',
-      showConfirmButton: false,
-      timer: 1500
-    })
+      MySwal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `Job Creado\n${uuid}`,
+        showConfirmButton: false,
+        timer: 3000
+      })
+    } catch (e) {
+      MySwal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Error al crear job',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    }
   }
 
   return {

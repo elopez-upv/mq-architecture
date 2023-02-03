@@ -6,7 +6,12 @@ RUN mkdir -p /home/node/worker/node_modules \
 
 WORKDIR /home/node/worker
 
+RUN apk update
+
+RUN apk add git
+
 COPY ./worker/package*.json ./
+
 COPY ./worker .
 
 RUN npm install

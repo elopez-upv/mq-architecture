@@ -1,20 +1,18 @@
-/* eslint-disable no-console */
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import Table from 'react-bootstrap/Table'
 import '../../assets/style/index.css'
+import { GlobalContext } from '../../provider/global'
 
 function gitJobs() {
-  const [items, setItems] = useState([])
+  const { global, setGlobal } = useContext(GlobalContext)
 
   useEffect(() => {
-    const myJobs = JSON.parse(localStorage.getItem('myJobs'))
-    const jobs = myJobs?.jobs ? myJobs.jobs : []
-    setItems(jobs)
-  }, [items])
+    setGlobal(JSON.parse(localStorage.getItem('myJobs')) || {})
+  }, [])
 
   return (
     <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '90vh', fontFamily: 'Open Sans, sans-serif' }}>
@@ -24,26 +22,26 @@ function gitJobs() {
             <Card.Body>
               <Card.Title style={{ textAlign: 'center', fontSize: '30px', fontWeight: '600' }}>Jobs Creados</Card.Title>
               <br />
-              <Table striped bordered hover>
+              <Table responsive>
                 <thead>
                   <tr>
-                    <th>Id</th>
-                    <th>Url</th>
-                    <th>Archivo</th>
-                    <th>Fecha Creación</th>
-                    <th>Tiempo Demorado</th>
-                    <th>Resultado</th>
+                    <th key={1}>Id</th>
+                    <th key={2}>Url</th>
+                    <th key={3}>Archivo</th>
+                    <th key={4}>Fecha Creación</th>
+                    <th key={5}>Tiempo Demorado (seg)</th>
+                    <th key={6}>Resultado</th>
                   </tr>
                 </thead>
                 <tbody>
-                  { items.map((job) => (
-                    <tr>
-                      <td>{job.id}</td>
-                      <td>{job.url}</td>
-                      <td>{job.fileName}</td>
-                      <td>{job.createdAt}</td>
-                      <td>{job.elapsedTime}</td>
-                      <td>{job.result}</td>
+                  { global.jobs.map((job) => (
+                    <tr key={job.id}>
+                      <td key={1}>{job.id}</td>
+                      <td key={2}>{job.url}</td>
+                      <td key={3}>{job.fileName}</td>
+                      <td key={4}>{job.createdAt}</td>
+                      <td key={5}>{job.elapsedTime}</td>
+                      <td key={6}>{job.result}</td>
                     </tr>
                   ))}
                 </tbody>

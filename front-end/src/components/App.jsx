@@ -1,19 +1,17 @@
 import React from 'react'
 import Header from './common/Header'
 import JobsQuery from '../hooks/git-executor/getJobs'
+import { GlobalContextProvider } from '../provider/global'
 
 function App({ children }) {
-  const newJobsQuery = JobsQuery()
-  const { getJobs } = newJobsQuery
-  getJobs()
-
   return (
-    <div>
+    <GlobalContextProvider>
+      <JobsQuery />
       <Header />
       <div>
         {children}
       </div>
-    </div>
+    </GlobalContextProvider>
   )
 }
 
