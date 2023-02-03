@@ -1,4 +1,4 @@
-# (SAD) - Sistema Distribuido - Git Executor
+# :rocket: (SAD) - Sistema Distribuido - Git Executor
 
 Git executor es un sistema distribuido conformado por un grupo de servicios con el fin de ejecutar ficheros Shell `(.sh)`. El sistema está basado en una arquitectura orientada a `eventos` haciendo uso del patrón `Publish/Subscribe`. 
 
@@ -8,9 +8,8 @@ Git executor es un sistema distribuido conformado por un grupo de servicios con 
   width="800" height="200">
 </p>
 
-## Tabla de Contenido
-
-- [(SAD) - Sistema Distribuido - Git Executor](#sad---sistema-distribuido---git-executor)
+##  Tabla de Contenido
+- [:rocket: (SAD) - Sistema Distribuido - Git Executor](#rocket-sad---sistema-distribuido---git-executor)
   - [Tabla de Contenido](#tabla-de-contenido)
   - [Desarrolladores](#desarrolladores)
   - [Funcionamiento](#funcionamiento)
